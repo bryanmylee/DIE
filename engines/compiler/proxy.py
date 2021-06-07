@@ -50,7 +50,7 @@ def is_target_ch(cmdline) :
         if cmdline[i] != '-c':
             continue
 
-        source_path = cmdline[i + 1]   
+        source_path = cmdline[i + 1]
         if "Runtime/Base/ThreadContext.cpp" in source_path :
             return False
     return True
@@ -66,9 +66,9 @@ def is_target(cmdline):
     elif engine == "CH" :
         return is_target_ch(cmdline)
     elif engine == "V8" :
-        return True 
+        return True
 def remove(l, e):
-    try: 
+    try:
         l.remove(e)
     except ValueError:
         pass
@@ -104,15 +104,15 @@ if __name__ == '__main__':
 
     if is_target(new_cmdline):
         if compiler == "clang":
-            new_cmdline[0] = os.path.join(AFL_ROOT, "afl-clang-fast")
+            new_cmdline[0] = os.path.join(AFL_ROOT, "afl-clang")
         else:
             assert(compiler == "clang++")
-            new_cmdline[0] = os.path.join(AFL_ROOT, "afl-clang-fast++")
+            new_cmdline[0] = os.path.join(AFL_ROOT, "afl-clang++")
     else:
         new_cmdline[0] = compiler
 
     new_cmdline = rewrite(new_cmdline)
     with open(os.path.join(ROOT, "proxy.log"), "a") as f:
         f.write(' '.join(new_cmdline) + "\n")
-        
+
     os.execlp(new_cmdline[0], *new_cmdline)

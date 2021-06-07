@@ -6,7 +6,11 @@ if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]
     exit 1
 fi
 
+PROJECT_ROOT=`realpath .`
+ENGINE_PATH=`realpath $1`
 DIE_corpus=`realpath $2`
+CORPUS_ROOT=`realpath "$2/.."`
+
 libs=""
 
 if [ "$3" = "ch" ]
@@ -16,7 +20,7 @@ else
     libs="$DIE_corpus/lib.js $DIE_corpus/jsc.js $DIE_corpus/v8.js $DIE_corpus/ffx.js $DIE_corpus/chakra.js"
 fi
 
-
+pushd $CORPUS_ROOT
 tmux new-session -s fuzzer -d \
-        "./fuzz/scripts/run-all.py -- ./fuzz/afl/afl-fuzz -m none -o output \
-        "$1" ${libs} @@"
+        "$PROJECT_ROOT/fuzz/scripts/run-all.py -- $PROJECT_ROOT/fuzz/afl/afl-fuzz -m none -o output \
+        "$ENGINE_PATH" ${libs} @@"

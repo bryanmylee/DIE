@@ -12,7 +12,8 @@ if __name__ == '__main__':
     p.add_argument('cmd', nargs='+')
     p.add_argument('--cpu', nargs='?', type=int, default=int(multiprocessing.cpu_count() - 4))
     cmd = p.parse_args().cmd
-    assert('output' in cmd)
+    # Fails if unintended "output" string in command.
+    # Use output## as key for output-%d instead.
     for i in range(p.parse_args().cpu):
-        new_cmd = ' '.join(cmd).replace('output', 'output-%d' % i)
+        new_cmd = ' '.join(cmd).replace('output##', 'output-%d' % i)
         os.system('tmux new-window -n jsfuzz-%d "AFL_NO_UI=1 REDIS_URL=redis://localhost:9000 %s; /bin/bash"' % (i, new_cmd))

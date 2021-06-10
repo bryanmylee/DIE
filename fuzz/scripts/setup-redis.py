@@ -1,4 +1,4 @@
-#!/usr/bin/env python3 
+#!/usr/bin/env python3
 import os
 import subprocess
 #export REDIS_URL=redis://localhost:9000
@@ -11,7 +11,9 @@ if "ssh-tunneling" in out.decode("utf-8"):
 
 print("This script makes ssh-tunneling between your redis-server and this machine.")
 
-server = input("redis-server URL : ")
-login = input("redis-server ID : ")
+host = input("redis-server HOST : ")
+sshport = input("redis-server SSH PORT : ")
+port = input("redis-server REDIS PORT : ")
+login = input("redis-server USER ID : ")
 
-os.system("tmux new-session -s ssh-tunneling -d 'ssh -L 9000:localhost:6379 "  + login + "@" + server + "'")
+os.system(f"tmux new-session -s ssh-tunneling -d 'ssh -L 9000:{host}:{port} {login}@{host} -p {sshport}'")

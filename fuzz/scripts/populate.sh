@@ -21,7 +21,7 @@ else
 fi
 
 # make_initial_corpus generates corpus directories with indices %d.
-# output## will be replaced by output-%d where %d represents the index of the instance.
+# output## will be replaced by output-%d where %d represents the index of the instance by the run-all.py script.
 tmux new-session -s corpus -d \
         "$PROJECT_ROOT/fuzz/scripts/run-all.py -- $PROJECT_ROOT/fuzz/afl/afl-fuzz -m none -o $OUTPUT_ROOT/output## \
         -i $CORPUS_ROOT/output## \

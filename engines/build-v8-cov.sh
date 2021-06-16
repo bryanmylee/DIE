@@ -10,8 +10,8 @@ if [ ! -d "utils/depot_tools" ]; then
 fi
 
 export PATH=$PATH:$PWD/utils/depot_tools
-export CC="$PWD/compiler/clang" 
-export CXX="$PWD/compiler/clang++" 
+export CC="$PWD/compiler/clang"
+export CXX="$PWD/compiler/clang++"
 
 pushd v8-$1/v8
 
@@ -23,9 +23,9 @@ gclient sync
 
 #tools/dev/gm.py x64.debug
 rm -rf out/Debug
-gn args out/Debug
+gn gen out/Debug
 cp ../../utils/args_debug.gn out/Debug/args.gn
-gn args out/Debug
+gn gen out/Debug
 mv third_party/llvm-build/Release+Asserts/bin/clang third_party/llvm-build/Release+Asserts/bin/clang.bak
 #rm third_party/llvm-build/Release+Asserts/bin/clang++ third_party/llvm-build/Release+Asserts/bin/clang-cl
 ln -s $PWD/../../compiler/proxy.py third_party/llvm-build/Release+Asserts/bin/clang

@@ -21,5 +21,5 @@ def parse_args():
     return p.parse_args()
 
 args = parse_args()
-tunnel_cmd = f"'ssh -L 9000:{args.master_host}:{args.master_redis_port} {args.master_user_id}@{args.master_host} -p {args.master_ssh_port}'";
+tunnel_cmd = f"'ssh -o \"StrictHostKeyChecking no\" -L 9000:{args.master_host}:{args.master_redis_port} {args.master_user_id}@{args.master_host} -p {args.master_ssh_port}'";
 os.system(f"tmux new-session -s ssh-tunneling -d {tunnel_cmd}")

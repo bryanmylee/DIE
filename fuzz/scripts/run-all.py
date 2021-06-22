@@ -10,7 +10,8 @@ environ["REDIS_URL"] = "redis://localhost:9000"
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
     p.add_argument('cmd', nargs='+')
-    p.add_argument('--cpu', nargs='?', type=int, default=int(multiprocessing.cpu_count() - 4))
+    default_cpu = max(1, multiprocessing.cpu_count() - 4)
+    p.add_argument('--cpu', nargs='?', type=int, default=default_cpu)
     cmd = p.parse_args().cmd
     # Fails if unintended "output" string in command.
     # Use output## as key for output-%d instead.

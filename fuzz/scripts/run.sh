@@ -6,7 +6,7 @@ if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]
     exit 1
 fi
 
-PROJECT_ROOT=`realpath .`
+SCRIPT_ROOT=`dirname $0`
 ENGINE_PATH=`realpath $1`
 LIBS_ROOT=`realpath $2`
 OUTPUT_ROOT=`realpath $3`
@@ -23,5 +23,5 @@ fi
 # make_initial_corpus generates corpus directories with indices %d.
 # output## will be replaced by output-%d where %d represents the index of the instance by the run-all.py script.
 tmux new-session -s fuzzer -d \
-        "$PROJECT_ROOT/fuzz/scripts/run-all.py -- $PROJECT_ROOT/fuzz/afl/afl-fuzz -m none -o $OUTPUT_ROOT/output## \
+        "$SCRIPT_ROOT/run-all.py -- $SCRIPT_ROOT/../afl/afl-fuzz -m none -o $OUTPUT_ROOT/output## \
         $ENGINE_PATH ${libs} @@"

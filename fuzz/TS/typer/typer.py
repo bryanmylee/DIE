@@ -1,10 +1,9 @@
-import subprocess, os, sys, tempfile, json
+#!/usr/bin/env python3
+import argparse, subprocess, os, sys, tempfile, json
 import resolve
 
-# I prefer to use d8 to run the instrumented code, 
+# I prefer to use d8 to run the instrumented code,
 # which should be fastest I believe.
-
-d8_path = "/home/soyeon/jsfuzz/js-static/engines/v8-latest/v8/out/Release/d8"
 
 def get_lib(path):
     if path.find("ChakraCore/") != -1 or path.find("chakra/") != -1:
@@ -19,8 +18,13 @@ def get_lib(path):
         return ""
 
 if __name__ == "__main__":
+    p = argparse.ArgumentParser()
+    p.add_argument('target')
+    p.add_argument('v8_binary')
+    args = p.parse_args()
+    target = os.path.abspath(args.target)
+    d8_path = os.path.abspath(args.v8_binary)
 
-    target = sys.argv[1]
     FNULL = open(os.devnull, 'w')
 
     if os.path.isdir(target):
@@ -42,7 +46,7 @@ if __name__ == "__main__":
                     print('Instrumentation failed')
                     continue
                 print('Instrumentation finished')
-                
+
                 print('Profiling: %s' % full_path)
                 output = None
                 lib = get_lib(full_path)
@@ -51,13 +55,13 @@ if __name__ == "__main__":
                     exit()
                 cmd = [d8_path]
                 if len(lib) > 0:
-                    cmd.append(lib) 
+                    cmd.append(lib)
                 cmd.append(ins_path)
                 output = None
                 try:
                     output = subprocess.check_output(cmd, timeout=30)
                 except subprocess.TimeoutExpired as e:
-                    output = e.output 
+                    output = e.output
                 except subprocess.CalledProcessError as e:
                     output = e.output
 

@@ -34,3 +34,8 @@ pushd $BUILD
 #../../configure --enable-optimize --enable-address-sanitizer --disable-jemalloc
 ../../configure --enable-optimize
 make -j 8
+
+popd
+popd
+pushd sm
+touch build-success

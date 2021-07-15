@@ -15,3 +15,5 @@ export CXXFLAGS="-O1 -fno-omit-frame-pointer"
 export CFLAGS="-O1 -fno-omit-frame-pointer"
 
 ./build.sh --static -j $(nproc) -d --cc=$CC --cxx=$CXX
+
+touch build-cov-success

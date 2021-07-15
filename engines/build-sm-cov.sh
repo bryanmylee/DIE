@@ -32,3 +32,8 @@ popd
 #pushd $BUILD
 #../../configure --enable-optimize
 #make -j 8
+
+popd
+popd
+pushd sm
+touch build-cov-success

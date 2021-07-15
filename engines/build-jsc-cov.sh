@@ -10,3 +10,5 @@ fi
 pushd jsc-$1
 
 ./Tools/Scripts/build-jsc --jsc-only --debug --cmakeargs="-DENABLE_STATIC_JSC=ON"
+
+touch build-cov-success

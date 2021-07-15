@@ -36,3 +36,4 @@ patch -p0 < ../utils/new-chakra.patch
 #./build.sh --sanitize=address --static -j $(nproc) --cc=$CLANG --cxx=$CLANGXX
 ./build.sh --static -j $(nproc) --cc=$CLANG --cxx=$CLANGXX
 
+touch build-success

@@ -38,3 +38,8 @@ ninja -C out/Debug
 #cp ../../utils/args_release.gn out/Release/args.gn
 #gn args out/Release
 #ninja -C out/Release
+popd
+
+pushd v8-$1
+touch build-cov-success
+

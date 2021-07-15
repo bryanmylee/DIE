@@ -4,15 +4,15 @@
 # old version doesn't support clang ?
 export LLVM_ROOT="/usr/bin"
 export CC="gcc-7"
-# "$LLVM_ROOT/clang-6.0" 
+# "$LLVM_ROOT/clang-6.0"
 export CXX="g++-7"
-# "$LLVM_ROOT/clang++-6.0" 
+# "$LLVM_ROOT/clang++-6.0"
 
 if [ -z $1 ] ; then
   echo "usage: $0 <version>"
   exit 1
 fi
-pushd webkit-$1
+pushd jsc-$1
 
 # debug mode
 #CFLAGS=-g ./Tools/Scripts/build-jsc --jsc-only --makeargs="-j$(nproc)" --debug --system-malloc --cmakeargs=-DCMAKE_CXX_FLAGS="-fsanitize=address -fno-omit-frame-pointer -g"

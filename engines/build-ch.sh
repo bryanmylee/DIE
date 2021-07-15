@@ -11,19 +11,19 @@ LLVM_ROOT="/usr/bin"
 version=${1%.*}
 version=$(echo $version | cut -f2 -d.)
 if (( $(echo "$version > 6" | bc -l) )); then
-CLANG="$LLVM_ROOT/clang-6.0" 
+CLANG="$LLVM_ROOT/clang-6.0"
 CLANGXX="$LLVM_ROOT/clang++-6.0"
 echo "Clang version is 6.0"
 else
-CLANG="$LLVM_ROOT/clang-3.8" 
+CLANG="$LLVM_ROOT/clang-3.8"
 CLANGXX="$LLVM_ROOT/clang++-3.8"
 echo "Clang version is 3.8"
 fi
 
 
-CLANG="$LLVM_ROOT/clang-6.0" 
+CLANG="$LLVM_ROOT/clang-6.0"
 CLANGXX="$LLVM_ROOT/clang++-6.0"
-pushd chakracore-$1
+pushd ch-$1
 patch -p0 < ../utils/new-chakra.patch
 
 #debug mode
@@ -34,5 +34,5 @@ patch -p0 < ../utils/new-chakra.patch
 #release mode
 # it seems ASAN affects some bugs, so we turn off
 #./build.sh --sanitize=address --static -j $(nproc) --cc=$CLANG --cxx=$CLANGXX
-./build.sh --static -j $(nproc) --cc=$CLANG --cxx=$CLANGXX 
+./build.sh --static -j $(nproc) --cc=$CLANG --cxx=$CLANGXX
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pushd gecko-dev/js/src
+pushd sm/js/src
 
 HASH=`git rev-parse HEAD`
 
@@ -23,7 +23,7 @@ mkdir $BUILD
 pushd $BUILD
 
 #../../configure --enable-debug --disable-optimize --enable-address-sanitizer --disable-jemalloc
-../../configure --enable-debug --enable-optimize 
+../../configure --enable-debug --enable-optimize
 make -j 8
 
 popd

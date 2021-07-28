@@ -10,13 +10,17 @@ CRASH_KEY = 'crashQueue'
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
+    p.add_argument('--redis_port', type=int)
     p.add_argument('out_dir')
-    out_dir = os.path.abspath(p.parse_args().out_dir)
-    print(f'saving crashes to {out_dir}')
+    args = p.parse_args()
+    redis_port = args.redis_port
+    out_dir = os.path.abspath(args.out_dir)
+
+    print(f'saving crashes to {out_dir} from port {redis_port}')
     if not os.path.isdir(out_dir):
        os.makedirs(out_dir)
 
-    r = redis.Redis(host='localhost', port=9000)
+    r = redis.Redis(host='localhost', port=redis_port)
 
     num_crashes = r.llen(CRASH_KEY)
     timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')

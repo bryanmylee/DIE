@@ -16,17 +16,21 @@ FUZZERS_KEY = 'fuzzers'
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
+    p.add_argument('--redis-port', type=int)
     p.add_argument('out_dir')
-    out_dir = os.path.abspath(p.parse_args().out_dir)
+    args = p.parse_args()
+    redis_port = args.redis_port
+    out_dir = os.path.abspath(args.out_dir)
+
     print(f'saving stats to {out_dir}')
     if not os.path.isdir(out_dir):
         os.makedirs(out_dir)
 
-    r = redis.Redis(host='localhost', port=9000)
+    r = redis.Redis(host='localhost', port=redis_port)
 
     fuzzers = r.smembers(FUZZERS_KEY)
     fuzzer_ids = (f"{FUZZERS_KEY}:{b.decode('utf-8')}" for b in r.smembers(FUZZERS_KEY))
-    
+
     fuzzers_data = []
     for i, fuzzer_id in enumerate(fuzzer_ids):
         fuzzer_data_raw = r.get(fuzzer_id).decode('utf-8')
@@ -44,7 +48,7 @@ if __name__ == '__main__':
         'unique_crashes': accum_ints_on_key(fuzzers_data, 'unique_crashes'),
         'unique_hangs': accum_ints_on_key(fuzzers_data, 'unique_hangs'),
     }
-    
+
     with open(f'{out_dir}/fuzzers.txt', 'w') as f:
         for k, v in data.items():
             f.write(f'{k}\t: {v}\n')

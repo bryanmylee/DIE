@@ -25,6 +25,6 @@ fi
 
 # make_initial_corpus generates corpus directories with indices %d.
 # output## will be replaced by output-%d where %d represents the index of the instance by the run-all.py script.
-tmux new-session -s fuzzer -d \
+tmux new-session -s fuzzer-$PORT -d \
         "$SCRIPT_ROOT/run-all.py --cpu=$NUM_CORES --redis_port=$REDIS_PORT -- $SCRIPT_ROOT/../afl/afl-fuzz -m none -o $OUTPUT_ROOT/output## \
         $ENGINE_PATH ${libs} @@"
